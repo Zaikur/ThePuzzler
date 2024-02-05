@@ -30,9 +30,10 @@ class DrawMenu(pygame.sprite.Sprite):
     #This static method places buttons on the start screen
     @staticmethod
     def DrawStart():
+        # Dimensions for the menu box - Calculated from current window width and height
         menu_width = context.WIDTH // 2
         menu_height = context.HEIGHT // 2
-        menu_x = (context.WIDTH - menu_width) // 2
+        menu_x = ((context.WIDTH - menu_width) // 2) + 7
         menu_y = (context.HEIGHT - menu_height)
         
         button_names = ['Main Menu', 'Exit']
@@ -49,7 +50,7 @@ class DrawMenu(pygame.sprite.Sprite):
         # Dimensions for the menu box - Calculated from current window width and height
         menu_width = context.WIDTH // 1.5
         menu_height = context.HEIGHT
-        menu_x = (context.WIDTH - menu_width) // 2
+        menu_x = ((context.WIDTH - menu_width) // 2) + 10
         menu_y = (context.HEIGHT - menu_height) // 2
 
         # Create an opaque box
@@ -74,7 +75,7 @@ class DrawMenu(pygame.sprite.Sprite):
         # Dimensions for the menu box - Calculated from current window width and height
         menu_width = context.WIDTH // 1.5
         menu_height = context.HEIGHT
-        menu_x = (context.WIDTH - menu_width) // 2
+        menu_x = ((context.WIDTH - menu_width) // 2) + 10
         menu_y = (context.HEIGHT - menu_height) // 2
 
         # Create an opaque box
@@ -97,7 +98,7 @@ class DrawMenu(pygame.sprite.Sprite):
         # Dimensions for the menu box - Calculated from current window width and height
         menu_width = context.WIDTH // 1.5
         menu_height = context.HEIGHT
-        menu_x = (context.WIDTH - menu_width) // 2
+        menu_x = ((context.WIDTH - menu_width) // 2) + 10
         menu_y = (context.HEIGHT - menu_height) // 2
 
         # Create an opaque box

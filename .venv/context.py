@@ -37,7 +37,7 @@ background = Background('.venv/assets/images/title_background.png', (0,0))      
 
 #Music setup
 pygame.mixer.init()                                                 #Initialize mixer
-pygame.mixer.music.load('.venv/assets/sounds/Mind-Bender.mp3')      #Load the music file
+pygame.mixer.music.load('.venv/assets/music/Mind-Bender.mp3')      #Load the music file
 pygame.mixer.music.play(-1)                                         #Play the music on loop
 pygame.mixer.music.set_volume(.5)                                   #Set volume to 50%
 adjustment = .1                                                     #Volume change increment
