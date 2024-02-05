@@ -33,7 +33,7 @@ class DrawMenu(pygame.sprite.Sprite):
         # Dimensions for the menu box - Calculated from current window width and height
         menu_width = context.WIDTH // 2
         menu_height = context.HEIGHT // 2
-        menu_x = ((context.WIDTH - menu_width) // 2) + 7
+        menu_x = ((context.WIDTH - menu_width) // 2) + 10
         menu_y = (context.HEIGHT - menu_height)
         
         button_names = ['Main Menu', 'Exit']
@@ -60,7 +60,7 @@ class DrawMenu(pygame.sprite.Sprite):
         context.screen.blit(menu_surface, (menu_x, menu_y))
 
         # Button positions and names
-        button_names = ['First Puzzle', 'Second Puzzle', 'Third Puzzle', 'Options', 'Back', 'Exit']
+        button_names = ['2048', 'Puzzle1', 'Puzzle2', 'Options', 'Back', 'Exit']
         buttons = DrawMenu.CreateButtons(button_names, menu_x, menu_y, menu_width, menu_height)
         
         for button in buttons:

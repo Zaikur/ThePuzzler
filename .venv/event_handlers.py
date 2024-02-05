@@ -27,7 +27,7 @@ def handle_options():
     context.start_menu = False
     context.volume_menu = False
 
-def handle_puzzle1():
+def handle_2048():
     context.main_menu = False
     context.options_menu = False
     context.q_puzzle = True
@@ -109,7 +109,7 @@ action_handlers = {
     'Play': handle_play,
     '-': handle_quieter,
     '+': handle_louder,
-    'Puzzle1': handle_puzzle1,
+    '2048': handle_2048,
     'Puzzle2': handle_puzzle2,
     'Puzzle3': handle_puzzle3,
 }

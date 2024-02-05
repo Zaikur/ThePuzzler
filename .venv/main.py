@@ -39,4 +39,4 @@ while context.run:
                                     
     pygame.display.flip()                   #Place visual elements on the screen
 pygame.mixer.music.stop()
-pygame.quit()                               #When run = false the while loop ends and this will run to clear assets
+pygame.quit()                               #When run = false the while loop ends and this will trigger and clear assets
