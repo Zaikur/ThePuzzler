@@ -9,9 +9,7 @@ import pygame
 def handle_back():
     context.main_menu = False
     context.options_menu = False
-    context.q_puzzle = False
-    context.a_puzzle = False
-    context.j_puzzle = False
+    context._2048 = False
     context.start_menu = False
     context.volume_menu = False
 
@@ -21,54 +19,42 @@ def handle_exit():
 def handle_options():
     context.main_menu = False
     context.options_menu = True
-    context.q_puzzle = False
-    context.a_puzzle = False
-    context.j_puzzle = False
+    context._2048 = False
     context.start_menu = False
     context.volume_menu = False
 
 def handle_2048():
     context.main_menu = False
     context.options_menu = False
-    context.q_puzzle = True
-    context.a_puzzle = False
-    context.j_puzzle = False
+    context._2048 = True
     context.start_menu = False
     context.volume_menu = False
     
 def handle_puzzle2():
     context.main_menu = False
     context.options_menu = False
-    context.q_puzzle = False
-    context.a_puzzle = True
-    context.j_puzzle = False
+    context._2048 = False
     context.start_menu = False
     context.volume_menu = False
     
 def handle_puzzle3():
     context.main_menu = False
     context.options_menu = False
-    context.q_puzzle = False
-    context.a_puzzle = False
-    context.j_puzzle = True
+    context._2048 = False
     context.start_menu = False
     context.volume_menu = False
     
 def handle_start():
     context.main_menu = True
     context.options_menu = False
-    context.q_puzzle = False
-    context.a_puzzle = False
-    context.j_puzzle = True
+    context._2048 = False
     context.start_menu = False
     context.volume_menu = False
     
 def handle_volume():
     context.main_menu = False
     context.options_menu = False
-    context.q_puzzle = False
-    context.a_puzzle = False
-    context.j_puzzle = False
+    context._2048 = False
     context.start_menu = False
     context.volume_menu = True
     

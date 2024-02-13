@@ -60,7 +60,7 @@ class DrawMenu(pygame.sprite.Sprite):
         context.screen.blit(menu_surface, (menu_x, menu_y))
 
         # Button positions and names
-        button_names = ['2048', 'Puzzle1', 'Puzzle2', 'Options', 'Back', 'Exit']
+        button_names = ['2048', 'Options', 'Back', 'Exit']
         buttons = DrawMenu.CreateButtons(button_names, menu_x, menu_y, menu_width, menu_height)
         
         for button in buttons:

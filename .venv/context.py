@@ -25,9 +25,7 @@ main_menu = False
 options_menu = False
 start_menu = True
 volume_menu = False
-q_puzzle = False
-a_puzzle = False
-j_puzzle = False
+_2048 = False
 
 # Font setup
 fontMain = pygame.font.Font('.venv/assets/fonts/audiowide.ttf', 40)     #Set the main font to be used('font', font_size)
