@@ -2,6 +2,10 @@
 #2/4/2024
 #This class used to draw different sections of the menu
 
+#Jason Nelson
+#02/12/2024
+#Added Draw2048Submenu method
+
 import context
 import pygame
 from models.button import Button
@@ -125,6 +129,34 @@ class DrawMenu(pygame.sprite.Sprite):
         # Drawing the slider foreground to represent the current volume
         pygame.draw.rect(context.screen, (100, 200, 100), slider_foreground)
         
+        for button in buttons:
+            button.draw()
+
+        return buttons
+    
+    @staticmethod
+    def Draw2048Submenu():
+        menu_width = context.WIDTH // 1.5
+        menu_height = context.HEIGHT
+        menu_x = ((context.WIDTH - menu_width) // 2) + 10
+        menu_y = (context.HEIGHT - menu_height) // 2
+
+        # Create an opaque box
+        menu_surface = pygame.Surface((menu_width, menu_height))
+        menu_surface.set_alpha(210)  # Adjust alpha for opacity (0-255)
+        menu_surface.fill((0, 0, 0))  # Fill with black or any color
+        context.screen.blit(menu_surface, (menu_x, menu_y))
+
+        # Static message
+        font = pygame.font.Font(None, 36)
+        message = font.render("Select your board size:", True, (255, 255, 255))
+        message_rect = message.get_rect(center=(menu_x + menu_width // 2, menu_y + 50))
+        context.screen.blit(message, message_rect)
+
+        # Button positions and names
+        button_names = ['3x3', '4x4', '5x5', '6x6', '7x7', '8x8', 'Main Menu']
+        buttons = DrawMenu.CreateButtons(button_names, menu_x, menu_y, menu_width, menu_height)
+
         for button in buttons:
             button.draw()
 

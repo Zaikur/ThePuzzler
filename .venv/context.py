@@ -3,6 +3,10 @@
 # context.py module contains global configuration such as the screen size, fonts, menu state booleans, and other shared resources that need to be used
 # throughout the application
 
+#Jason Nelson
+#02/12/2024
+#Set the initial state of _2048_submenu to false
+
 import pygame
 from models.background import Background
 
@@ -26,6 +30,7 @@ options_menu = False
 start_menu = True
 volume_menu = False
 _2048 = False
+_2048_submenu = False
 
 # Font setup
 fontMain = pygame.font.Font('.venv/assets/fonts/audiowide.ttf', 40)     #Set the main font to be used('font', font_size)

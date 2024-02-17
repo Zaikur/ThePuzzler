@@ -2,6 +2,10 @@
 #2/2/2024
 #This file used for game startup, navigation, and calling methods to start puzzles, change options, exit, etc.
 
+#Jason Nelson
+#02/12/2024
+#Added handling for _2048_submenu
+
 import context
 import pygame
 from models.background import Background
@@ -17,6 +21,7 @@ while context.run:
     if context.main_menu: buttons = DrawMenu.DrawMainMenu()
     elif context.options_menu: buttons = DrawMenu.DrawOptionsMenu()
     elif context.volume_menu: buttons = DrawMenu.DrawVolumeMenu()
+    elif context._2048_submenu: buttons = DrawMenu.Draw2048Submenu()
     elif context._2048: pass
     else: buttons = DrawMenu.DrawStart()    
     
