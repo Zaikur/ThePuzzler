@@ -11,67 +11,39 @@ from context import settings_manager        #Allows access to global settings th
 import pygame
 from settings_manager import SettingsManager
 
-
-def handle_back():
+def reset_context():
     context.main_menu = False
     context.options_menu = False
     context._2048 = False
     context.start_menu = False
     context.volume_menu = False
     context._2048_submenu = False
+
+def handle_back():
+    reset_context()
     print("Going back to main menu")
 
 def handle_exit():
     context.run = False
 
 def handle_options():
-    context.main_menu = False
+    reset_context()
     context.options_menu = True
-    context._2048 = False
-    context.start_menu = False
-    context.volume_menu = False
 
 def handle_2048():
-    context.main_menu = False
-    context.options_menu = False
+    reset_context()
     context._2048 = True
-    context.start_menu = False
-    context.volume_menu = False
 
 def handle_2048_submenu():
+    reset_context()
     context._2048_submenu = True
-    context._2048 = False
-    context.main_menu = False
-    context.options_menu = False
-    context.volume_menu = False
-    
-def handle_puzzle2():
-    context.main_menu = False
-    context.options_menu = False
-    context._2048 = False
-    context.start_menu = False
-    context.volume_menu = False
-    
-def handle_puzzle3():
-    context.main_menu = False
-    context.options_menu = False
-    context._2048 = False
-    context.start_menu = False
-    context.volume_menu = False
     
 def handle_start():
+    reset_context()
     context.main_menu = True
-    context.options_menu = False
-    context._2048_submenu = False
-    context._2048 = False
-    context.start_menu = False
-    context.volume_menu = False
     
 def handle_volume():
-    context.main_menu = False
-    context.options_menu = False
-    context._2048 = False
-    context.start_menu = False
+    reset_context()
     context.volume_menu = True
     
 def handle_stop():
@@ -144,7 +116,5 @@ action_handlers = {
     'Next': handle_next,
     '-': handle_quieter,
     '+': handle_louder,
-    '2048': handle_2048_submenu,
-    'Puzzle2': handle_puzzle2,
-    'Puzzle3': handle_puzzle3,
+    '2048': handle_2048_submenu
 }
