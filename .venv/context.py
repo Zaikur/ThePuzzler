@@ -5,9 +5,14 @@
 
 import pygame
 from models.background import Background
+from settings_manager import SettingsManager
 
 # Initialize Pygame
 pygame.init()                               #initialize imported pygame modules  i.e. Get everything started
+
+# Get saved user settings from file
+settings_manager = SettingsManager()
+settings_manager.load_settings()
 
 
 # Screen setup
@@ -34,11 +39,14 @@ fontMain = pygame.font.Font('.venv/assets/fonts/audiowide.ttf', 40)     #Set the
 background = Background('.venv/assets/images/title_background.png', (0,0))               #Get the image to be used as a background
 
 #Music setup
-pygame.mixer.init()                                                 #Initialize mixer
-pygame.mixer.music.load('.venv/assets/music/Mind-Bender.mp3')      #Load the music file
-pygame.mixer.music.play(-1)                                         #Play the music on loop
-pygame.mixer.music.set_volume(.5)                                   #Set volume to 50%
-adjustment = .1                                                     #Volume change increment
+pygame.mixer.init()                                                                 #Initialize mixer
+pygame.mixer.music.load('.venv/assets/music/' + settings_manager.get_setting('currentSong'))                       #Load the music file
+
+if (settings_manager.get_setting('playMusic')):                                     #If the user has music set to on
+    pygame.mixer.music.play(-1)                                                     #Play the music on loop
+
+pygame.mixer.music.set_volume(settings_manager.get_setting('volume'))               #Set volume to last saved volume
+adjustment = .1                                                                     #Volume change increment
 
 #Game state - set to false to close the application
 run = True
