@@ -8,7 +8,6 @@
 
 import context
 import pygame
-from models.background import Background
 from models.menu import DrawMenu
 from event_handlers import action_handlers
 
