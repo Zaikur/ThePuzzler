@@ -9,7 +9,6 @@
 import context
 from context import settings_manager        #Allows access to global settings that were initialized in the context.py module
 import pygame
-from settings_manager import SettingsManager
 
 def reset_context():
     context.main_menu = False
