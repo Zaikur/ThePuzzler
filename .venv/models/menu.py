@@ -6,6 +6,10 @@
 #02/12/2024
 #Added Draw2048Submenu method
 
+# Ayden Hofts
+#02/18/2024
+#Added Draw3x3Board up to Draw8x8Board methods 
+
 import context
 import pygame
 from models.button import Button
@@ -161,3 +165,253 @@ class DrawMenu(pygame.sprite.Sprite):
             button.draw()
 
         return buttons
+    
+   
+    @staticmethod
+    def Draw3x3Board():
+        # Calculate the center of the screen
+        center_x = context.WIDTH // 2
+        center_y = context.HEIGHT // 2
+
+        # Calculate the dimensions of the board and buttons
+        board_width = 300  
+        board_height = 300  
+        button_width = 200
+        button_height = 50
+        button_margin = 10
+
+        # Calculate the positions for the board and buttons
+        board_x = center_x - board_width // 2
+        board_y = center_y - board_height // 2
+        button_x = center_x - button_width // 2
+        button_y = board_y + board_height + button_margin
+
+        # Create buttons including the back button
+        button_names = ['Back']  # Add the back button
+        buttons = DrawMenu.CreateButtons(button_names, button_x, button_y, button_width, button_height)
+
+        # Create an opaque box for the board
+        board_surface = pygame.Surface((board_width, board_height))
+        board_surface.set_alpha(210)
+        board_surface.fill((0, 0, 0))
+        context.screen.blit(board_surface, (board_x, board_y))
+
+        # Drawing the 3x3 board
+        cell_size = 100
+        for i in range(3):
+            for j in range(3):
+                pygame.draw.rect(context.screen, (255, 255, 255), (board_x + i * cell_size, board_y + j * cell_size, cell_size, cell_size), 2)
+
+        # Draw buttons
+        for button in buttons:
+            button.draw()
+
+        return buttons
+
+    
+    @staticmethod
+    def Draw4x4Board():
+        # Calculate the center of the screen
+        center_x = context.WIDTH // 2
+        center_y = context.HEIGHT // 2
+
+        # Calculate the dimensions of the board and buttons
+        board_width = 400  
+        board_height = 400  
+        button_width = 200
+        button_height = 50
+        button_margin = 10
+
+        # Calculate the positions for the board and buttons
+        board_x = center_x - board_width // 2
+        board_y = center_y - board_height // 2
+        button_x = center_x - button_width // 2
+        button_y = board_y + board_height + button_margin
+
+        # Create buttons including the back button
+        button_names = ['Back']  # Add the back button
+        buttons = DrawMenu.CreateButtons(button_names, button_x, button_y, button_width, button_height)
+
+        # Create an opaque box for the board
+        board_surface = pygame.Surface((board_width, board_height))
+        board_surface.set_alpha(210)
+        board_surface.fill((0, 0, 0))
+        context.screen.blit(board_surface, (board_x, board_y))
+
+        # Drawing the 4x4 board
+        cell_size = 100
+        for i in range(4):
+            for j in range(4):
+                pygame.draw.rect(context.screen, (255, 255, 255), (board_x + i * cell_size, board_y + j * cell_size, cell_size, cell_size), 2)
+
+        # Draw buttons
+        for button in buttons:
+            button.draw()
+
+        return buttons
+
+    @staticmethod
+    def Draw5x5Board():
+        # Calculate the center of the screen
+        center_x = context.WIDTH // 2
+        center_y = context.HEIGHT // 2
+
+        # Calculate the dimensions of the board and buttons
+        board_width = 500  
+        board_height = 500  
+        button_width = 200
+        button_height = 50
+        button_margin = 10
+
+        # Calculate the positions for the board and buttons
+        board_x = center_x - board_width // 2
+        board_y = center_y - board_height // 2
+        button_x = center_x - button_width // 2
+        button_y = board_y + board_height + button_margin
+
+        # Create buttons including the back button
+        button_names = ['Back']  # Add the back button
+        buttons = DrawMenu.CreateButtons(button_names, button_x, button_y, button_width, button_height)
+
+        # Create an opaque box for the board
+        board_surface = pygame.Surface((board_width, board_height))
+        board_surface.set_alpha(210)
+        board_surface.fill((0, 0, 0))
+        context.screen.blit(board_surface, (board_x, board_y))
+
+        # Drawing the 5x5 board
+        cell_size = 100
+        for i in range(5):
+            for j in range(5):
+                pygame.draw.rect(context.screen, (255, 255, 255), (board_x + i * cell_size, board_y + j * cell_size, cell_size, cell_size), 2)
+
+        # Draw buttons
+        for button in buttons:
+            button.draw()
+
+        return buttons
+    
+    @staticmethod
+    def Draw6x6Board():
+        # Calculate the center of the screen
+        center_x = context.WIDTH // 2
+        center_y = context.HEIGHT // 2
+
+        # Calculate the dimensions of the board and buttons
+        board_width = 400  
+        board_height = 400  
+        button_width = 200
+        button_height = 50
+        button_margin = 10
+
+        # Calculate the positions for the board and buttons
+        board_x = center_x - board_width // 2
+        board_y = center_y - board_height // 2
+        button_x = center_x - button_width // 2
+        button_y = board_y + board_height + button_margin
+
+        # Create buttons including the back button
+        button_names = ['Back']  # Add the back button
+        buttons = DrawMenu.CreateButtons(button_names, button_x, button_y, button_width, button_height)
+
+        # Create an opaque box for the board
+        board_surface = pygame.Surface((board_width, board_height))
+        board_surface.set_alpha(210)
+        board_surface.fill((0, 0, 0))
+        context.screen.blit(board_surface, (board_x, board_y))
+
+        # Drawing the 6x6 board
+        cell_size = 67
+        for i in range(6):
+            for j in range(6):
+                pygame.draw.rect(context.screen, (255, 255, 255), (board_x + i * cell_size, board_y + j * cell_size, cell_size, cell_size), 2)
+
+        # Draw buttons
+        for button in buttons:
+            button.draw()
+
+        return buttons
+    
+    @staticmethod
+    def Draw7x7Board():
+        # Calculate the center of the screen
+        center_x = context.WIDTH // 2
+        center_y = context.HEIGHT // 2
+
+        # Calculate the dimensions of the board and buttons
+        board_width = 500 
+        board_height = 500  
+        button_width = 200
+        button_height = 50
+        button_margin = 10
+
+        # Calculate the positions for the board and buttons
+        board_x = center_x - board_width // 2
+        board_y = center_y - board_height // 2
+        button_x = center_x - button_width // 2
+        button_y = board_y + board_height + button_margin
+
+        # Create buttons including the back button
+        button_names = ['Back']  # Add the back button
+        buttons = DrawMenu.CreateButtons(button_names, button_x, button_y, button_width, button_height)
+
+        # Create an opaque box for the board
+        board_surface = pygame.Surface((board_width, board_height))
+        board_surface.set_alpha(210)
+        board_surface.fill((0, 0, 0))
+        context.screen.blit(board_surface, (board_x, board_y))
+
+        # Drawing the 7x7 board
+        cell_size = 71.5
+        for i in range(7):
+            for j in range(7):
+                pygame.draw.rect(context.screen, (255, 255, 255), (board_x + i * cell_size, board_y + j * cell_size, cell_size, cell_size), 2)
+
+        # Draw buttons
+        for button in buttons:
+            button.draw()
+
+        return buttons
+    
+    @staticmethod
+    def Draw8x8Board():
+        # Calculate the center of the screen
+        center_x = context.WIDTH // 2
+        center_y = context.HEIGHT // 2
+
+        # Calculate the dimensions of the board and buttons
+        board_width = 500  
+        board_height = 500 
+        button_width = 200
+        button_height = 50
+        button_margin = 10
+
+        # Calculate the positions for the board and buttons
+        board_x = center_x - board_width // 2
+        board_y = center_y - board_height // 2
+        button_x = center_x - button_width // 2
+        button_y = board_y + board_height + button_margin
+
+        # Create buttons including the back button
+        button_names = ['Back']  # Add the back button
+        buttons = DrawMenu.CreateButtons(button_names, button_x, button_y, button_width, button_height)
+
+        # Create an opaque box for the board
+        board_surface = pygame.Surface((board_width, board_height))
+        board_surface.set_alpha(210)
+        board_surface.fill((0, 0, 0))
+        context.screen.blit(board_surface, (board_x, board_y))
+
+        # Drawing the 8x8 board
+        cell_size = 63
+        for i in range(8):
+            for j in range(8):
+                pygame.draw.rect(context.screen, (255, 255, 255), (board_x + i * cell_size, board_y + j * cell_size, cell_size, cell_size), 2)
+
+        # Draw buttons
+        for button in buttons:
+            button.draw()
+
+        return buttons
+    
+    

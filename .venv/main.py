@@ -6,6 +6,10 @@
 #02/12/2024
 #Added handling for _2048_submenu
 
+#Ayden Hofts
+#02/18/2024
+#Added the handling for _3x3 up to _8x8 boards
+
 import context
 import pygame
 from models.menu import DrawMenu
@@ -21,6 +25,12 @@ while context.run:
     elif context.options_menu: buttons = DrawMenu.DrawOptionsMenu()
     elif context.volume_menu: buttons = DrawMenu.DrawVolumeMenu()
     elif context._2048_submenu: buttons = DrawMenu.Draw2048Submenu()
+    elif context._3x3: buttons = DrawMenu.Draw3x3Board()
+    elif context._4x4: buttons = DrawMenu.Draw4x4Board()
+    elif context._5x5: buttons = DrawMenu.Draw5x5Board()
+    elif context._6x6: buttons = DrawMenu.Draw6x6Board()
+    elif context._7x7: buttons = DrawMenu.Draw7x7Board()
+    elif context._8x8: buttons = DrawMenu.Draw8x8Board()
     elif context._2048: pass
     else: buttons = DrawMenu.DrawStart()    
     

@@ -6,9 +6,14 @@
 #02/12/2024
 #Added handling for _2048_submenu
 
+#Ayden Hofts
+#02/18/2024
+#Added handling for the _3x3 and up to _8x8 boards
+
 import context
 from context import settings_manager        #Allows access to global settings that were initialized in the context.py module
 import pygame
+
 
 def reset_context():
     context.main_menu = False
@@ -17,6 +22,12 @@ def reset_context():
     context.start_menu = False
     context.volume_menu = False
     context._2048_submenu = False
+    context._3x3 = False
+    context._4x4 = False
+    context._5x5 = False
+    context._6x6 = False
+    context._7x7 = False
+    context._8x8 = False
 
 def handle_back():
     reset_context()
@@ -36,6 +47,30 @@ def handle_2048():
 def handle_2048_submenu():
     reset_context()
     context._2048_submenu = True
+
+def handle_3x3():
+    reset_context()
+    context._3x3 = True
+
+def handle_4x4():
+    reset_context()
+    context._4x4 = True
+
+def handle_5x5():
+    reset_context()
+    context._5x5 = True
+
+def handle_6x6():
+    reset_context()
+    context._6x6 = True
+
+def handle_7x7():
+    reset_context()
+    context._7x7 = True
+
+def handle_8x8():
+    reset_context()
+    context._8x8 = True
     
 def handle_start():
     reset_context()
@@ -115,5 +150,11 @@ action_handlers = {
     'Next': handle_next,
     '-': handle_quieter,
     '+': handle_louder,
-    '2048': handle_2048_submenu
+    '2048': handle_2048_submenu,
+    '3x3': handle_3x3,
+    '4x4': handle_4x4,
+    '5x5': handle_5x5,
+    '6x6': handle_6x6,
+    '7x7': handle_7x7,
+    '8x8': handle_8x8
 }

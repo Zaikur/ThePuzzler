@@ -7,6 +7,10 @@
 #02/12/2024
 #Set the initial state of _2048_submenu to false
 
+#Ayden Hofts
+#02/18/2024
+#Set the intial state of _3x3 up to _8x8 to false
+
 import pygame
 from models.background import Background
 from settings_manager import SettingsManager
@@ -36,6 +40,13 @@ start_menu = True
 volume_menu = False
 _2048 = False
 _2048_submenu = False
+_3x3 = False
+_4x4 = False
+_5x5 = False
+_6x6 = False
+_7x7 = False
+_8x8 = False
+
 
 # Font setup
 fontMain = pygame.font.Font('.venv/assets/fonts/audiowide.ttf', 40)     #Set the main font to be used('font', font_size)
