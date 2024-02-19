@@ -5,6 +5,8 @@
 #Jason Nelson
 #02/12/2024
 #Added handling for _2048_submenu
+#02/19/2024
+#updated the action handler of handle_back to take the player back to the submenu if they use the back button in a game, otherwise the back button will take them to the main menu.
 
 #Ayden Hofts
 #02/18/2024
@@ -30,8 +32,11 @@ def reset_context():
     context._8x8 = False
 
 def handle_back():
-    reset_context()
-    print("Going back to main menu")
+    if not context.main_menu:
+        handle_2048_submenu()
+    else:
+        reset_context()
+        print("Going back to main menu")
 
 def handle_exit():
     context.run = False
