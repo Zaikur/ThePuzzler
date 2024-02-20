@@ -50,6 +50,7 @@ _8x8 = False
 
 # Font setup
 fontMain = pygame.font.Font('.venv/assets/fonts/audiowide.ttf', 40)     #Set the main font to be used('font', font_size)
+fontScore = pygame.font.Font('.venv/assets/fonts/audiowide.ttf', 20)    #Set the score font to be used('font', font_size)
 
 #Image setup
 background = Background('.venv/assets/images/title_background.png', (0,0))               #Get the image to be used as a background

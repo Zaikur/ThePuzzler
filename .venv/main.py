@@ -14,6 +14,7 @@ import context
 import pygame
 from models.menu import DrawMenu
 from event_handlers import action_handlers
+from _2048.game_board import GameBoard
 
 while context.run:
     context.timer.tick(context.fps)
@@ -25,7 +26,7 @@ while context.run:
     elif context.options_menu: buttons = DrawMenu.DrawOptionsMenu()
     elif context.volume_menu: buttons = DrawMenu.DrawVolumeMenu()
     elif context._2048_submenu: buttons = DrawMenu.Draw2048Submenu()
-    elif context._3x3: buttons = DrawMenu.Draw3x3Board()
+    elif context._3x3: buttons = GameBoard(3).draw_board()
     elif context._4x4: buttons = DrawMenu.Draw4x4Board()
     elif context._5x5: buttons = DrawMenu.Draw5x5Board()
     elif context._6x6: buttons = DrawMenu.Draw6x6Board()
@@ -46,6 +47,14 @@ while context.run:
                     # Call the corresponding action handler
                     if button.action in action_handlers:
                         action_handlers[button.action]()
+        elif event.type == pygame.KEYDOWN:
+            if event.key in (pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d):   #If the key pressed is a WASD key
+                if pygame.K_w: GameBoard.move('up')
+                elif pygame.K_a: GameBoard.move('left')
+                elif pygame.K_s: GameBoard.move('down')
+                elif pygame.K_d: GameBoard.move('right')
+            elif event.key == pygame.K_ESCAPE:                              #If the key pressed is the escape key
+                GameBoard.save_and_exit()
 
     pygame.display.flip()                   #Place visual elements on the screen
 pygame.mixer.music.stop()
