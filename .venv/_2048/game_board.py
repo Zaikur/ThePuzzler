@@ -12,21 +12,27 @@ import pygame
 import context
 import json
 import os
+import numpy as np
 from models.button import Button
 
 class GameBoard:
     def __init__(self, size=3):
         self.size = size  # Board size (3 for 3x3)
-        self.board_width = 100 * size
-        self.board_height = 100 * size
+        if size >= 3 and size <= 6:
+            self.board_width = 100 * size
+            self.board_height = 100 * size
+            self.cell_size = 100
+        elif size > 6 and size <= 8:
+            self.board_width = 75 * size
+            self.board_height = 75 * size
+            self.cell_size = 75    
         #self.board = np.zeros((size, size), dtype=int)
-        self.cell_size = 100
         self.high_score = 0
         self.current_score = 0
         self.load_high_score()
 
     def draw_board(self):
-        self.spawn_tile()
+        #self.spawn_tile()
         
         center_x, center_y = context.WIDTH // 2, context.HEIGHT // 2
         board_x, board_y = center_x - self.board_width // 2, center_y - self.board_height // 2
@@ -78,7 +84,7 @@ class GameBoard:
             
     #This method draws the back button on the screen
     def draw_back_button(self):
-        button_width, button_height = 300, 50
+        button_width, button_height = 250, 50
         margin = 10
         # Position at bottom left
         button_x, button_y = margin, context.HEIGHT - button_height - margin

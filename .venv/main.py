@@ -27,11 +27,11 @@ while context.run:
     elif context.volume_menu: buttons = DrawMenu.DrawVolumeMenu()
     elif context._2048_submenu: buttons = DrawMenu.Draw2048Submenu()
     elif context._3x3: buttons = GameBoard(3).draw_board()
-    elif context._4x4: buttons = DrawMenu.Draw4x4Board()
-    elif context._5x5: buttons = DrawMenu.Draw5x5Board()
-    elif context._6x6: buttons = DrawMenu.Draw6x6Board()
-    elif context._7x7: buttons = DrawMenu.Draw7x7Board()
-    elif context._8x8: buttons = DrawMenu.Draw8x8Board()
+    elif context._4x4: buttons = GameBoard(4).draw_board()
+    elif context._5x5: buttons = GameBoard(5).draw_board()
+    elif context._6x6: buttons = GameBoard(6).draw_board()
+    elif context._7x7: buttons = GameBoard(7).draw_board()
+    elif context._8x8: buttons = GameBoard(8).draw_board()
     elif context._2048: pass
     else: buttons = DrawMenu.DrawStart()    
     
