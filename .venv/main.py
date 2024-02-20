@@ -15,29 +15,35 @@ import pygame
 from models.menu import DrawMenu
 from event_handlers import action_handlers
 from _2048.game_board import GameBoard
-
+ 
+# Create an instance of GameBoard
+game_board = None
+ 
+# Set up a flag to indicate if the game board is drawn
+board_drawn = False
+ 
 while context.run:
     context.timer.tick(context.fps)
     context.screen.fill('light gray')
     context.screen.blit(context.background.image, context.background.rect)
-    
-    #This section used to decide how to react to user input - What to draw
-    if context.main_menu: buttons = DrawMenu.DrawMainMenu()
-    elif context.options_menu: buttons = DrawMenu.DrawOptionsMenu()
-    elif context.volume_menu: buttons = DrawMenu.DrawVolumeMenu()
-    elif context._2048_submenu: buttons = DrawMenu.Draw2048Submenu()
-    elif context._3x3: buttons = GameBoard(3).draw_board()
-    elif context._4x4: buttons = GameBoard(4).draw_board()
-    elif context._5x5: buttons = GameBoard(5).draw_board()
-    elif context._6x6: buttons = GameBoard(6).draw_board()
-    elif context._7x7: buttons = GameBoard(7).draw_board()
-    elif context._8x8: buttons = GameBoard(8).draw_board()
-    elif context._2048: pass
-    else: buttons = DrawMenu.DrawStart()    
-    
-    #Event handling for game navigation 
+   
+    # Draw the menu if no game board is drawn
+    if not board_drawn:
+        if context.main_menu:
+            buttons = DrawMenu.DrawMainMenu()
+        elif context.options_menu:
+            buttons = DrawMenu.DrawOptionsMenu()
+        elif context.volume_menu:
+            buttons = DrawMenu.DrawVolumeMenu()
+        elif context._2048_submenu:
+            buttons = DrawMenu.Draw2048Submenu()
+        else:
+            buttons = DrawMenu.DrawStart()
+    else:
+        buttons = game_board.draw_board()
+   
+    #Event handling for game navigation and user input
     for event in pygame.event.get():
-        print(event)
         if event.type == pygame.QUIT:
             context.run = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -47,15 +53,32 @@ while context.run:
                     # Call the corresponding action handler
                     if button.action in action_handlers:
                         action_handlers[button.action]()
+                    # Initialize game board if a size option is clicked
+                    if button.action in ['3x3', '4x4', '5x5', '6x6', '7x7', '8x8']:
+                        game_board = GameBoard(int(button.action[0]))
+                        game_board.spawn_tile()
         elif event.type == pygame.KEYDOWN:
             if event.key in (pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d):   #If the key pressed is a WASD key
-                if pygame.K_w: GameBoard.move('up')
-                elif pygame.K_a: GameBoard.move('left')
-                elif pygame.K_s: GameBoard.move('down')
-                elif pygame.K_d: GameBoard.move('right')
-            elif event.key == pygame.K_ESCAPE:                              #If the key pressed is the escape key
-                GameBoard.save_and_exit()
-
+                if board_drawn:
+                    if event.key == pygame.K_w:
+                        game_board.move('up')
+                    elif event.key == pygame.K_a:
+                        game_board.move('left')
+                    elif event.key == pygame.K_s:
+                        game_board.move('down')
+                    elif event.key == pygame.K_d:
+                        game_board.move('right')
+            elif event.key == pygame.K_ESCAPE:                              
+                if board_drawn:
+                    game_board.save_and_exit()
+                else:
+                    context.run = False
+ 
+    # Set the flag to indicate that the game board is drawn
+    board_drawn = True if context._3x3 or context._4x4 or context._5x5 or context._6x6 or context._7x7 or context._8x8 else False
+   
     pygame.display.flip()                   #Place visual elements on the screen
+ 
 pygame.mixer.music.stop()
 pygame.quit()                               #When run = false the while loop ends and this will trigger and clear assets
+ 
