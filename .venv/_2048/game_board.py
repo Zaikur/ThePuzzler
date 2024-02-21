@@ -155,19 +155,20 @@ class GameBoard:
         return np.any(self.board == 2048)
  
     def check_game_over(self):
-        #Check if there are no valid moves left.
+    # Check if there are no valid moves left.
         if any(0 in row for row in self.board):
-         return False # If there are empty cells, game is not over yet.
+            return False  # If there are empty cells, game is not over yet.
 
-         # Check if there are adjacent cells with the same value
-         for i in range(self.size):
-          for j in range(self.size:
-           current_tile = self.board[i][j]
-           if (i < self.size - 1 and self.board[i + 1][j] == current_tile) or \
-              (j < self.size - 1 and self.board[i][j + 1] == current_tile):
-               return False # If there are adjacent cells with the same value, game is not over yet
-          
-          return True # If no empty cells and no adjacent cells with the same value, game is over
+        # Check if there are adjacent cells with the same value
+        for i in range(self.size):
+            for j in range(self.size):
+                current_tile = self.board[i][j]
+                if (i < self.size - 1 and self.board[i + 1][j] == current_tile) or \
+                (j < self.size - 1 and self.board[i][j + 1] == current_tile):
+                    return False  # If there are adjacent cells with the same value, game is not over yet
+
+        return True  # If no empty cells and no adjacent cells with the same value, game is over
+
    
     #This method saves the current board state for later use
     @staticmethod
