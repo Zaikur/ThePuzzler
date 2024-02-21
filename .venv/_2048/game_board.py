@@ -6,6 +6,10 @@
 #2/2/2024
 #Consolidated board drawing to one method that calculates grid based on board size
 #and added a method to load and save high scores
+
+#Jason Nelson
+#02/21/2024
+#Added logic for checking if game is over
  
 import random
 import pygame
@@ -152,7 +156,18 @@ class GameBoard:
  
     def check_game_over(self):
         #Check if there are no valid moves left.
-        pass    
+        if any(0 in row for row in self.board):
+         return False # If there are empty cells, game is not over yet.
+
+         # Check if there are adjacent cells with the same value
+         for i in range(self.size):
+          for j in range(self.size:
+           current_tile = self.board[i][j]
+           if (i < self.size - 1 and self.board[i + 1][j] == current_tile) or \
+              (j < self.size - 1 and self.board[i][j + 1] == current_tile):
+               return False # If there are adjacent cells with the same value, game is not over yet
+          
+          return True # If no empty cells and no adjacent cells with the same value, game is over
    
     #This method saves the current board state for later use
     @staticmethod
