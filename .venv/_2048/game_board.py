@@ -66,7 +66,7 @@ class GameBoard:
                     context.screen.blit(text_surface, text_rect)
  
         # Draw back button and scores
-        buttons = self.draw_back_button()
+        buttons = self.draw_buttons()
         self.draw_scores()
        
         return buttons
@@ -99,17 +99,29 @@ class GameBoard:
             self.save_high_score()
            
     #This method draws the back button on the screen
-    def draw_back_button(self):
+    def draw_buttons(self):
         button_width, button_height = 250, 50
         margin = 10
-        # Position at bottom left
-        button_x, button_y = margin, context.HEIGHT - button_height - margin
- 
-        back_button = Button((button_x, button_y, button_width, button_height), 'Back', 'Back')
-        save_and_exit_button = Button((button_x, button_y - 60, button_width, button_height), 'Save/Exit', 'Save/Exit')
+        
+        # Position the back and save buttons at the bottom left
+        back_button_x, back_button_y = margin, context.HEIGHT - button_height - margin
+        save_and_exit_button_x, save_and_exit_button_y = margin, context.HEIGHT - button_height * 2 - margin * 2
+
+        back_button = Button((back_button_x, back_button_y, button_width, button_height), 'Back', 'Back')
+        save_and_exit_button = Button((save_and_exit_button_x, save_and_exit_button_y, button_width, button_height), 'Save/Exit', 'Save/Exit')
+        
+        # Position the reset button at the bottom right
+        reset_button_x = context.WIDTH - button_width - margin
+        reset_button_y = context.HEIGHT - button_height - margin
+        reset_button = Button((reset_button_x, reset_button_y, button_width, button_height), 'Reset', 'Reset')
+        
+        # Draw the buttons
         back_button.draw()
         save_and_exit_button.draw()
-        return [back_button, save_and_exit_button]
+        reset_button.draw()
+        
+        return [back_button, save_and_exit_button, reset_button]
+
        
        
     #This method draws the scores on the screen
@@ -155,7 +167,7 @@ class GameBoard:
         return np.any(self.board == 2048)
  
     def check_game_over(self):
-    # Check if there are no valid moves left.
+        # Check if there are no valid moves left.
         if any(0 in row for row in self.board):
             return False  # If there are empty cells, game is not over yet.
 
@@ -168,7 +180,6 @@ class GameBoard:
                     return False  # If there are adjacent cells with the same value, game is not over yet
 
         return True  # If no empty cells and no adjacent cells with the same value, game is over
-
    
     #This method saves the current board state for later use
     @staticmethod
