@@ -7,6 +7,10 @@
 #Consolidated board drawing to one method that calculates grid based on board size
 #and added a method to load and save high scores
 
+#2/21/2024
+#Added logic to color tiles based on their value
+#Added sounds to tile combine and game win
+
 #Jason Nelson
 #02/21/2024
 #Added logic for checking if game is over
@@ -18,7 +22,7 @@ import json
 import os
 import numpy as np
 from models.button import Button
- 
+from _2048.colors import TILE_COLORS, get_font_color
  
 class GameBoard:
     def __init__(self, size=3):
@@ -36,10 +40,16 @@ class GameBoard:
         self.current_score = 0
         self.load_high_score()
         self.spawn_tile()  # Spawn a tile when the board is initialized
+        
+        #Sounds for tile combine and game win  
+        pygame.mixer.init()
+        #self.combine_sound = pygame.mixer.Sound('path/to/combine_sound.wav')
+        #self.win_sound = pygame.mixer.Sound('path/to/win_sound.wav')
  
     def draw_board(self):
         self.check_game_over()
         self.check_win()
+        
         # Drawing logic
         center_x, center_y = context.WIDTH // 2, context.HEIGHT // 2
         board_x, board_y = center_x - self.board_width // 2, center_y - self.board_height // 2
@@ -55,13 +65,14 @@ class GameBoard:
             for j in range(self.size):
                 cell_x = board_x + i * self.cell_size
                 cell_y = board_y + j * self.cell_size
+                value = self.board[i][j]
                 pygame.draw.rect(context.screen, (255, 255, 255), (cell_x, cell_y, self.cell_size, self.cell_size), 2)
                 # Draw number or tile if the value is not zero
-                value = self.board[i][j]
                 if value != 0:
-                    # Example code to draw number/text
+                    tile_color = TILE_COLORS.get(value, (205, 193, 180))
+                    pygame.draw.rect(context.screen, tile_color, (cell_x, cell_y, self.cell_size, self.cell_size))
                     font = pygame.font.Font(None, 36)
-                    text_surface = font.render(str(value), True, (255, 255, 255))
+                    text_surface = font.render(str(value), True, get_font_color(tile_color))        #Get font color based on tile color brightness
                     text_rect = text_surface.get_rect(center=(cell_x + self.cell_size // 2, cell_y + self.cell_size // 2))
                     context.screen.blit(text_surface, text_rect)
  
@@ -157,17 +168,19 @@ class GameBoard:
     def check_game_over(self):
         #Check if there are no valid moves left.
         if any(0 in row for row in self.board):
-         return False # If there are empty cells, game is not over yet.
+            return False # If there are empty cells, game is not over yet.
+        else: pass
+            
 
-         # Check if there are adjacent cells with the same value
-         for i in range(self.size):
-          for j in range(self.size:
-           current_tile = self.board[i][j]
-           if (i < self.size - 1 and self.board[i + 1][j] == current_tile) or \
-              (j < self.size - 1 and self.board[i][j + 1] == current_tile):
-               return False # If there are adjacent cells with the same value, game is not over yet
+        # Check if there are adjacent cells with the same value
+        for i in range(self.size):
+            for j in range(self.size):
+                current_tile = self.board[i][j]
+                if (i < self.size - 1 and self.board[i + 1][j] == current_tile) or \
+                    (j < self.size - 1 and self.board[i][j + 1] == current_tile):
+                    return False # If there are adjacent cells with the same value, game is not over yet.
           
-          return True # If no empty cells and no adjacent cells with the same value, game is over
+        return True # If no empty cells and no adjacent cells with the same value, game is over
    
     #This method saves the current board state for later use
     @staticmethod
