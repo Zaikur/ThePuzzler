@@ -1,6 +1,8 @@
 #Quinton Nelson
 #2/2/2024
 #This file used for game startup, navigation, and calling methods to start puzzles, change options, exit, etc.
+#2/21/2024
+#Added handling for popups in the main loop
 
 #Jason Nelson
 #02/12/2024
@@ -17,6 +19,7 @@ import pygame
 from models.menu import DrawMenu
 from event_handlers import action_handlers
 from _2048.game_board import GameBoard
+from _2048 import save_and_load
  
 # Create an instance of GameBoard
 game_board = None
@@ -43,6 +46,14 @@ while context.run:
             buttons = DrawMenu.DrawStart()
     else:
         buttons = game_board.draw_board()
+        
+        #buttons for popups
+        if context.win_popup:
+            buttons = GameBoard.show_win_popup()
+        elif context.lose_popup:
+            buttons = GameBoard.show_lose_popup()
+        elif context.load_popup:
+            buttons = GameBoard.show_load_popup()
    
     #Event handling for game navigation and user input
     for event in pygame.event.get():
@@ -56,7 +67,22 @@ while context.run:
                     # Special handling for the Reset button
                     if button.action == 'Reset' and game_board is not None:
                         game_board.reset_game()  # Reset the game board
+                        context.win_popup = False
+                        context.lose_popup = False
                         break
+                    if button.action == 'Continue' and game_board is not None:
+                        context.win_popup = False
+                        context.load_popup = False
+                        break
+                    if button.action == 'Save and Exit' and game_board is not None:
+                        save_and_load.save_state(game_board)
+                        context.run = False
+                        break
+                    if button.action == 'Load' and game_board is not None:
+                        save_and_load.load_state()
+                        context.load_popup = False
+                        break
+                        
                     # Call the corresponding action handler for other buttons
                     elif button.action in action_handlers:
                         action_handlers[button.action]()
@@ -75,11 +101,6 @@ while context.run:
                         game_board.move('down')
                     elif event.key == pygame.K_d:
                         game_board.move('right')
-            elif event.key == pygame.K_ESCAPE:                              
-                if board_drawn:
-                    game_board.save_and_exit()
-                else:
-                    context.run = False
  
     # Set the flag to indicate that the game board is drawn
     board_drawn = True if context._3x3 or context._4x4 or context._5x5 or context._6x6 or context._7x7 or context._8x8 else False

@@ -15,7 +15,6 @@
 import context
 from context import settings_manager        #Allows access to global settings that were initialized in the context.py module
 import pygame
-from _2048.game_board import GameBoard
 
 
 def reset_context():
@@ -143,10 +142,6 @@ def handle_next():
         pygame.mixer.music.load('.venv/assets/music/Mind-Bender.mp3')
         pygame.mixer.music.play(-1)
         
-def handle_save_and_exit():
-    GameBoard.save_state()
-    handle_exit()
-        
 
 # Map button actions to their handlers
 action_handlers = {
@@ -166,6 +161,5 @@ action_handlers = {
     '5x5': handle_5x5,
     '6x6': handle_6x6,
     '7x7': handle_7x7,
-    '8x8': handle_8x8,
-    'Save/Exit': handle_save_and_exit
+    '8x8': handle_8x8
 }

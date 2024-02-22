@@ -6,6 +6,10 @@
 #2/2/2024
 #Consolidated board drawing to one method that calculates grid based on board size
 #and added a method to load and save high scores
+#2/21/2024
+#Added logic to color tiles based on their value
+#Added sounds to tile combine
+#Added methods to display popups for certain game events
 
 #2/21/2024
 #Added logic to color tiles based on their value
@@ -23,6 +27,7 @@ import os
 import numpy as np
 from models.button import Button
 from _2048.colors import TILE_COLORS, get_font_color
+from _2048.popup import Popup
  
 class GameBoard:
     def __init__(self, size=3):
@@ -43,8 +48,7 @@ class GameBoard:
         
         #Sounds for tile combine and game win  
         pygame.mixer.init()
-        #self.combine_sound = pygame.mixer.Sound('path/to/combine_sound.wav')
-        #self.win_sound = pygame.mixer.Sound('path/to/win_sound.wav')
+        self.combine_sound = pygame.mixer.Sound('.venv/assets/sounds/chime.mp3')
  
     def draw_board(self):
         self.check_game_over()
@@ -134,7 +138,6 @@ class GameBoard:
         return [back_button, save_and_exit_button, reset_button]
 
        
-       
     #This method draws the scores on the screen
     def draw_scores(self):
         margin = 10
@@ -202,9 +205,16 @@ class GameBoard:
         self.spawn_tile()
         
         self.load_high_score()  # reload the high score on reset
-
    
-    #This method saves the current board state for later use
-    @staticmethod
-    def save_state():
-        pass
+    # The following methods are to show popups for different game scenarios, such as game over, win, and load state
+    def show_win_popup():
+        popup = Popup(context.screen, "You've won!", "Continue?", "Continue", "Reset")
+        return popup.draw()
+    
+    def show_lose_popup():
+        popup = Popup(context.screen, "You're out of moves.", "Try again?", "Reset", "Back")
+        return popup.draw()
+                
+    def show_load_popup():
+        popup = Popup(context.screen, "Save found.", "Resume?", "Load", "Continue")
+        return popup.draw()
