@@ -41,9 +41,6 @@ def load_game_state(board_size):
         current_score = save_data['current_score']
         context.first_time = save_data['first_time']
         
-        # Remove the save file after loading it
-        os.remove(filename)
-        
         return board, current_score
     else:
         # Return None if the save file doesn't exist

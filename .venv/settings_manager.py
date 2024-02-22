@@ -10,6 +10,7 @@ class SettingsManager:
         self.filename = filename
         self.default_settings = {
             'volume': 0.5,
+            'previousVolume': 0.5,
             'playMusic': True,
             'currentSong': 'Mind-Bender.mp3'
         }

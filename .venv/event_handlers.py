@@ -15,6 +15,7 @@
 import context
 from context import settings_manager        #Allows access to global settings that were initialized in the context.py module
 import pygame
+from _2048.game_board import GameBoard
 
 
 def reset_context():
@@ -33,6 +34,7 @@ def reset_context():
 
 def handle_back():
     if not context.main_menu:
+        GameBoard.save_game(context.game_board)
         handle_2048_submenu()
     else:
         reset_context()
@@ -99,7 +101,9 @@ def handle_quieter():
         # Adjust volume only if music is playing
         new_volume = max(0.0, min(1.0, current_volume - context.adjustment))
         pygame.mixer.music.set_volume(new_volume)
+        context.combine_sound.set_volume(new_volume)
         settings_manager.set_setting('volume', new_volume)
+        settings_manager.set_setting('previousVolume', new_volume)
     else:
         print("Music is not playing.")
 
@@ -110,7 +114,9 @@ def handle_louder():
         # Adjust volume only if music is playing
         new_volume = max(0.0, min(1.0, current_volume + context.adjustment))
         pygame.mixer.music.set_volume(new_volume)
+        context.combine_sound.set_volume(new_volume)
         settings_manager.set_setting('volume', new_volume)
+        settings_manager.set_setting('previousVolume', new_volume)
     else:
         print("Music is not playing.")
         
@@ -142,6 +148,18 @@ def handle_next():
         pygame.mixer.music.load('.venv/assets/music/Mind-Bender.mp3')
         pygame.mixer.music.play(-1)
         
+def handle_mute():
+    pygame.mixer.music.set_volume(0)
+    context.combine_sound.set_volume(0)
+    settings_manager.set_setting('volume', 0)
+    context.mute_sound = True
+
+def handle_unmute():
+    pygame.mixer.music.set_volume(settings_manager.get_setting('previousVolume'))
+    context.combine_sound.set_volume(settings_manager.get_setting('previousVolume'))
+    context.mute_sound = False
+    
+        
 
 # Map button actions to their handlers
 action_handlers = {
@@ -161,5 +179,7 @@ action_handlers = {
     '5x5': handle_5x5,
     '6x6': handle_6x6,
     '7x7': handle_7x7,
-    '8x8': handle_8x8
+    '8x8': handle_8x8,
+    'Mute': handle_mute,
+    'Unmute': handle_unmute
 }

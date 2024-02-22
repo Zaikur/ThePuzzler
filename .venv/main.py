@@ -19,10 +19,6 @@ import pygame
 from models.menu import DrawMenu
 from event_handlers import action_handlers
 from _2048.game_board import GameBoard
-from _2048 import save_and_load
- 
-# Create an instance of GameBoard
-game_board = None
  
 # Set up a flag to indicate if the game board is drawn
 board_drawn = False
@@ -45,7 +41,7 @@ while context.run:
         else:
             buttons = DrawMenu.DrawStart()
     else:
-        buttons = game_board.draw_board()
+        buttons = context.game_board.draw_board()
         
         #buttons for popups
         if context.win_popup:
@@ -54,9 +50,6 @@ while context.run:
         elif context.lose_popup:
             buttons = GameBoard.show_lose_popup()
             context.lose_popup = False
-        elif context.load_popup:
-            buttons = GameBoard.show_load_popup()
-            context.load_popup = False
    
     #Event handling for game navigation and user input
     for event in pygame.event.get():
@@ -68,24 +61,20 @@ while context.run:
                 if button.check_click(mouse_pos):
                     print(f"Clicked: {button.action}")
                     # Special handling for the Reset button
-                    if button.action == 'Reset' and game_board is not None:
-                        game_board.reset_game()  # Reset the game board
+                    if button.action == 'Reset' and context.game_board is not None:
+                        context.game_board.reset_game()  # Reset the game board
                         context.first_time = True
                         context.win_popup = False
                         context.lose_popup = False
                         break
-                    if button.action == 'Continue' and game_board is not None:
+                    if button.action == 'Continue' and context.game_board is not None:
                         context.first_time = False
                         context.win_popup = False
                         context.load_popup = False
                         break
-                    if button.action == 'Save/Exit' and game_board is not None:
-                        game_board.save_game()
+                    if button.action == 'Save/Exit' and context.game_board is not None:
+                        context.game_board.save_game()
                         context.run = False
-                        break
-                    if button.action == 'Load' and game_board is not None:
-                        save_and_load.load_game_state(game_board)
-                        context.load_popup = False
                         break
                         
                     # Call the corresponding action handler for other buttons
@@ -93,19 +82,18 @@ while context.run:
                         action_handlers[button.action]()
                     # Initialize game board if a size option is clicked
                     if button.action in ['3x3', '4x4', '5x5', '6x6', '7x7', '8x8']:
-                        game_board = GameBoard(int(button.action[0]))
-                        game_board.spawn_tile()
+                        context.game_board = GameBoard(int(button.action[0]))
         elif event.type == pygame.KEYDOWN:
             if event.key in (pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d):   #If the key pressed is a WASD key
                 if board_drawn:
                     if event.key == pygame.K_w:
-                        game_board.move('up')
+                        context.game_board.move('up')
                     elif event.key == pygame.K_a:
-                        game_board.move('left')
+                        context.game_board.move('left')
                     elif event.key == pygame.K_s:
-                        game_board.move('down')
+                        context.game_board.move('down')
                     elif event.key == pygame.K_d:
-                        game_board.move('right')
+                        context.game_board.move('right')
  
     # Set the flag to indicate that the game board is drawn
     board_drawn = True if context._3x3 or context._4x4 or context._5x5 or context._6x6 or context._7x7 or context._8x8 else False
@@ -113,5 +101,6 @@ while context.run:
     pygame.display.flip()                   #Place visual elements on the screen
  
 pygame.mixer.music.stop()
+if board_drawn: GameBoard.save_game(context.game_board)    #Save the game state
 pygame.quit()                               #When run = false the while loop ends and this will trigger and clear assets
  

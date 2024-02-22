@@ -53,6 +53,8 @@ _8x8 = False
 # State to show whether this is the first time you've reached 2048
 first_time = True
 
+# Global game state
+game_board = None
 
 # Font setup
 fontMain = pygame.font.Font('.venv/assets/fonts/audiowide.ttf', 40)     #Set the main font to be used('font', font_size)
@@ -65,10 +67,14 @@ background = Background('.venv/assets/images/title_background.png', (0,0))      
 pygame.mixer.init()                                                                 #Initialize mixer
 pygame.mixer.music.load('.venv/assets/music/' + settings_manager.get_setting('currentSong'))                       #Load the music file
 
+mute_sound = False
+combine_sound = pygame.mixer.Sound('.venv/assets/sounds/chime.mp3')                                                 #Load the sound file for combining tiles
+
 if (settings_manager.get_setting('playMusic')):                                     #If the user has music set to on
     pygame.mixer.music.play(-1)                                                     #Play the music on loop
 
 pygame.mixer.music.set_volume(settings_manager.get_setting('volume'))               #Set volume to last saved volume
+combine_sound.set_volume(settings_manager.get_setting('volume'))               #Set volume to last saved volume
 adjustment = .1                                                                     #Volume change increment
 
 #Game state - set to false to close the application

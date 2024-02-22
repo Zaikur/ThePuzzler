@@ -56,16 +56,12 @@ class GameBoard:
         else:
             self.board = np.zeros((self.size, self.size), dtype=int)
             self.current_score = 0
+            self.spawn_tile()  # Spawn 2 tiles when the board is initialized
+            self.spawn_tile()
 
         
         self.high_score = 0
         self.load_high_score()
-        self.spawn_tile()  # Spawn a tile when the board is initialized
-
-        
-        #Sounds for tile combine and game win  
-        pygame.mixer.init()
-        self.combine_sound = pygame.mixer.Sound('.venv/assets/sounds/chime.mp3')
         
  
     def draw_board(self):
@@ -144,9 +140,16 @@ class GameBoard:
         save_and_exit_button = Button((save_and_exit_button_x, save_and_exit_button_y, button_width, button_height), 'Save/Exit', 'Save/Exit')
         
         # Position the reset button at the bottom right
-        reset_button_x = context.WIDTH - button_width - margin
-        reset_button_y = context.HEIGHT - button_height - margin
-        reset_button = Button((reset_button_x, reset_button_y, button_width, button_height), 'Reset', 'Reset')
+        reset_button_x = margin
+        reset_button_y = margin
+        mute_button_text = "Mute" 
+        if context.mute_sound: mute_button_text =  "Unmute"
+        reset_button = Button((reset_button_x, reset_button_y, button_width, button_height), mute_button_text, mute_button_text)
+        
+        # Position the mute button at the top left
+        mute_button_x = context.WIDTH - button_width - margin
+        mute_button_y = context.HEIGHT - button_height - margin
+        mute_button = Button((mute_button_x, mute_button_y, button_width, button_height), 'Reset', 'Reset')
         
         # Draw the buttons
         back_button.draw()
@@ -264,7 +267,7 @@ class GameBoard:
                                 break
 
         if combined:
-            self.combine_sound.play()  # Play sound only when a combination occurs
+            if not context.mute_sound: context.combine_sound.play()  # Play sound only when a combination occurs
         
         if moved:
             self.spawn_tile()  # Spawn a new tile if any movement or combination occurred
@@ -320,8 +323,4 @@ class GameBoard:
     
     def show_lose_popup():
         popup = Popup(context.screen, "You're out of moves.", "Try again?", "Reset", "Back")
-        return popup.draw()
-                
-    def show_load_popup():
-        popup = Popup(context.screen, "Load", "Continue", "Load", "Continue")
         return popup.draw()
