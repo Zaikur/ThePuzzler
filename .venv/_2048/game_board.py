@@ -18,6 +18,11 @@
 #Jason Nelson
 #02/21/2024
 #Added logic for checking if game is over, also added the reset button that resets the game state
+
+#Ayden Hofts
+#02/22/2024
+#Added logic for moving tiles based on keyboard input and combining the tiles if they are the same
+#number and mulitplying them by 2.
  
 import random
 import pygame
@@ -45,10 +50,12 @@ class GameBoard:
         self.current_score = 0
         self.load_high_score()
         self.spawn_tile()  # Spawn a tile when the board is initialized
+
         
         #Sounds for tile combine and game win  
         pygame.mixer.init()
         self.combine_sound = pygame.mixer.Sound('.venv/assets/sounds/chime.mp3')
+        
  
     def draw_board(self):
         self.check_game_over()
@@ -91,8 +98,8 @@ class GameBoard:
         try:
             with open('high_score.json', 'r') as file:
                 data = json.load(file)
-                self.high_score = data.get(str(self.size), 0)
-        except FileNotFoundError:
+                self.high_score = int(data.get(str(self.size), 0))
+        except (FileNotFoundError, json.decoder.JSONDecodeError):
             self.high_score = 0
  
     #This method saves the high score to a file
@@ -100,9 +107,9 @@ class GameBoard:
         try:
             with open('high_score.json', 'r') as file:
                 data = json.load(file)
-        except FileNotFoundError:
+        except (FileNotFoundError, json.decoder.JSONDecodeError):
             data = {}
-        data[str(self.size)] = self.high_score
+        data[str(self.size)] = int(self.high_score)
         with open('high_score.json', 'w') as file:
             json.dump(data, file, indent=4)
  
@@ -170,11 +177,94 @@ class GameBoard:
                 if empty_positions:
                     i, j = empty_positions.pop()
                     self.board[i][j] = 2
- 
+
     def move(self, direction):
-        #Move and combine tiles based on the direction ('w', 'a', 's', 'd').
- 
-        pass
+    # Move and combine tiles based on the direction ('w', 'a', 's', 'd').
+        moved = False
+        combined = False
+
+        if direction == 'up':  # Move Up
+           for i in range(self.size):
+                for j in range(1, self.size):
+                    if self.board[i][j] != 0:
+                        for k in range(j, 0, -1):
+                            if self.board[i][k - 1] == 0:
+                                self.board[i][k - 1] = self.board[i][k]
+                                self.board[i][k] = 0
+                                moved = True
+                            elif self.board[i][k - 1] == self.board[i][k]:
+                                self.board[i][k - 1] *= 2
+                                self.board[i][k] = 0
+                                self.current_score += self.board[i][k - 1]
+                                moved = True
+                                combined = True
+                                break
+
+        elif direction == 'left':  # Move Left
+            for j in range(self.size):
+                for i in range(1, self.size):
+                    if self.board[i][j] != 0:
+                        for k in range(i, 0, -1):
+                            if self.board[k - 1][j] == 0:
+                                self.board[k - 1][j] = self.board[k][j]
+                                self.board[k][j] = 0
+                                moved = True
+                            elif self.board[k - 1][j] == self.board[k][j]:
+                                self.board[k - 1][j] *= 2
+                                self.board[k][j] = 0
+                                self.current_score += self.board[k - 1][j]
+                                moved = True
+                                combined = True
+                                break
+
+
+        elif direction == 'down':  # Move Down
+            for i in range(self.size):
+                for j in range(self.size - 2, -1, -1):
+                    if self.board[i][j] != 0:
+                        for k in range(j, self.size - 1):
+                            if self.board[i][k + 1] == 0:
+                                self.board[i][k + 1] = self.board[i][k]
+                                self.board[i][k] = 0
+                                moved = True
+                            elif self.board[i][k + 1] == self.board[i][k]:
+                                self.board[i][k + 1] *= 2
+                                self.board[i][k] = 0
+                                self.current_score += self.board[i][k + 1]
+                                moved = True
+                                combined = True
+                                break
+
+        elif direction == 'right':  # Move Right
+            for j in range(self.size):
+                for i in range(self.size - 2, -1, -1):
+                    if self.board[i][j] != 0:
+                        for k in range(i, self.size - 1):
+                            if self.board[k + 1][j] == 0:
+                                self.board[k + 1][j] = self.board[k][j]
+                                self.board[k][j] = 0
+                                moved = True
+                            elif self.board[k + 1][j] == self.board[k][j]:
+                                self.board[k + 1][j] *= 2
+                                self.board[k][j] = 0
+                                self.current_score += self.board[k + 1][j]
+                                moved = True
+                                combined = True
+                                break
+
+        if combined:
+            self.combine_sound.play()  # Play sound only when a combination occurs
+        
+        if moved:
+            self.spawn_tile()  # Spawn a new tile if any movement or combination occurred
+            self.update_score(self.current_score)  # Update the current score
+            
+        if self.check_win():
+            return 'win'
+        elif self.check_game_over():
+            return 'game_over'
+        return 'continue'
+
  
     def check_win(self):
         #Check if the player has reached the 2048 tile.
