@@ -10,6 +10,8 @@
 #Added logic to color tiles based on their value
 #Added sounds to tile combine
 #Added methods to display popups for certain game events
+#2/22/2024
+#Added logic to save and load game state
 
 #2/21/2024
 #Added logic to color tiles based on their value
