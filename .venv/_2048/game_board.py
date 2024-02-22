@@ -33,6 +33,7 @@ import numpy as np
 from models.button import Button
 from _2048.colors import TILE_COLORS, get_font_color
 from _2048.popup import Popup
+from _2048.save_and_load import load_game_state, save_game_state
  
 class GameBoard:
     def __init__(self, size=3):
@@ -45,9 +46,17 @@ class GameBoard:
             self.board_width = 75 * size
             self.board_height = 75 * size
             self.cell_size = 75    
-        self.board = np.zeros((size, size), dtype=int)
+        
+        #Check for saved game states
+        loaded_state = load_game_state(self.size)
+        if loaded_state[0] is not None and loaded_state[1] is not None:
+            self.board, self.current_score = loaded_state
+        else:
+            self.board = np.zeros((self.size, self.size), dtype=int)
+            self.current_score = 0
+
+        
         self.high_score = 0
-        self.current_score = 0
         self.load_high_score()
         self.spawn_tile()  # Spawn a tile when the board is initialized
 
@@ -297,6 +306,10 @@ class GameBoard:
         self.spawn_tile()
         
         self.load_high_score()  # reload the high score on reset
+        
+    # This method saves the current game state to a file by calling the save_game_state method
+    def save_game(self):
+        save_game_state(self.size, self.board, self.current_score)
    
     # The following methods are to show popups for different game scenarios, such as game over, win, and load state
     def show_win_popup():

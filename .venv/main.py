@@ -79,12 +79,12 @@ while context.run:
                         context.win_popup = False
                         context.load_popup = False
                         break
-                    if button.action == 'Save and Exit' and game_board is not None:
-                        save_and_load.save_state(game_board)
+                    if button.action == 'Save/Exit' and game_board is not None:
+                        game_board.save_game()
                         context.run = False
                         break
                     if button.action == 'Load' and game_board is not None:
-                        save_and_load.load_state()
+                        save_and_load.load_game_state(game_board)
                         context.load_popup = False
                         break
                         
