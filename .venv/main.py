@@ -5,6 +5,8 @@
 #Jason Nelson
 #02/12/2024
 #Added handling for _2048_submenu
+#02/21/2024
+# Added the reset button handling within the main loop
 
 #Ayden Hofts
 #02/18/2024
@@ -47,11 +49,16 @@ while context.run:
         if event.type == pygame.QUIT:
             context.run = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = event.pos  # Get the mouse click position
             for button in buttons:
-                if button.check_click(event.pos):
+                if button.check_click(mouse_pos):
                     print(f"Clicked: {button.action}")
-                    # Call the corresponding action handler
-                    if button.action in action_handlers:
+                    # Special handling for the Reset button
+                    if button.action == 'Reset' and game_board is not None:
+                        game_board.reset_game()  # Reset the game board
+                        break
+                    # Call the corresponding action handler for other buttons
+                    elif button.action in action_handlers:
                         action_handlers[button.action]()
                     # Initialize game board if a size option is clicked
                     if button.action in ['3x3', '4x4', '5x5', '6x6', '7x7', '8x8']:
