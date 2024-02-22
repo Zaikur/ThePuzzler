@@ -58,8 +58,8 @@ class GameBoard:
         
  
     def draw_board(self):
-        self.check_game_over()
-        self.check_win()
+        if self.check_game_over(): context.lose_popup = True
+        if self.check_win(): context.win_popup = True
         
         # Drawing logic
         center_x, center_y = context.WIDTH // 2, context.HEIGHT // 2
@@ -268,7 +268,9 @@ class GameBoard:
  
     def check_win(self):
         #Check if the player has reached the 2048 tile.
-        return np.any(self.board == 2048)
+        if context.first_time:
+            return np.any(self.board == 2048)
+        else: return False
  
     def check_game_over(self):
         # Check if there are no valid moves left.
@@ -298,7 +300,7 @@ class GameBoard:
    
     # The following methods are to show popups for different game scenarios, such as game over, win, and load state
     def show_win_popup():
-        popup = Popup(context.screen, "You've won!", "Continue?", "Continue", "Reset")
+        popup = Popup(context.screen, "You've won!", "Continue", "Continue", "Reset")
         return popup.draw()
     
     def show_lose_popup():
@@ -306,5 +308,5 @@ class GameBoard:
         return popup.draw()
                 
     def show_load_popup():
-        popup = Popup(context.screen, "Save found.", "Resume?", "Load", "Continue")
+        popup = Popup(context.screen, "Load", "Continue", "Load", "Continue")
         return popup.draw()

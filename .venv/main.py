@@ -50,10 +50,13 @@ while context.run:
         #buttons for popups
         if context.win_popup:
             buttons = GameBoard.show_win_popup()
+            context.win_popup = False
         elif context.lose_popup:
             buttons = GameBoard.show_lose_popup()
+            context.lose_popup = False
         elif context.load_popup:
             buttons = GameBoard.show_load_popup()
+            context.load_popup = False
    
     #Event handling for game navigation and user input
     for event in pygame.event.get():
@@ -67,10 +70,12 @@ while context.run:
                     # Special handling for the Reset button
                     if button.action == 'Reset' and game_board is not None:
                         game_board.reset_game()  # Reset the game board
+                        context.first_time = True
                         context.win_popup = False
                         context.lose_popup = False
                         break
                     if button.action == 'Continue' and game_board is not None:
+                        context.first_time = False
                         context.win_popup = False
                         context.load_popup = False
                         break

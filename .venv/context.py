@@ -50,6 +50,9 @@ _6x6 = False
 _7x7 = False
 _8x8 = False
 
+# State to show whether this is the first time you've reached 2048
+first_time = True
+
 
 # Font setup
 fontMain = pygame.font.Font('.venv/assets/fonts/audiowide.ttf', 40)     #Set the main font to be used('font', font_size)
