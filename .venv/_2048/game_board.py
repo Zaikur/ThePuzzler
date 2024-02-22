@@ -9,7 +9,7 @@
 
 #Jason Nelson
 #02/21/2024
-#Added logic for checking if game is over
+#Added logic for checking if game is over, also added the reset button that resets the game state
  
 import random
 import pygame
@@ -180,6 +180,18 @@ class GameBoard:
                     return False  # If there are adjacent cells with the same value, game is not over yet
 
         return True  # If no empty cells and no adjacent cells with the same value, game is over
+    
+    # This method resets the game state and spawns two new tiles
+    def reset_game(self):
+        self.board = np.zeros((self.size, self.size), dtype=int)  # Reset the board
+        self.current_score = 0  # Reset the current score
+        
+        # after reset, spawns 2 new tiles
+        self.spawn_tile()
+        self.spawn_tile()
+        
+        self.load_high_score()  # reload the high score on reset
+
    
     #This method saves the current board state for later use
     @staticmethod
