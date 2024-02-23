@@ -2,3 +2,10 @@ __pycache__/
 
 user_settings.json
 .venv/pyvenv.cfg
+high_score.json
+save_state_3x3.json
+save_state_4x4.json
+save_state_5x5.json
+save_state_6x6.json
+save_state_7x7.json
+save_state_8x8.json
