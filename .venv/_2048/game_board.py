@@ -140,23 +140,24 @@ class GameBoard:
         save_and_exit_button = Button((save_and_exit_button_x, save_and_exit_button_y, button_width, button_height), 'Save/Exit', 'Save/Exit')
         
         # Position the reset button at the bottom right
-        reset_button_x = margin
-        reset_button_y = margin
-        mute_button_text = "Mute" 
-        if context.mute_sound: mute_button_text =  "Unmute"
-        reset_button = Button((reset_button_x, reset_button_y, button_width, button_height), mute_button_text, mute_button_text)
+        reset_button_x = context.WIDTH - button_width - margin
+        reset_button_y = context.HEIGHT - button_height - margin
+        reset_button = Button((reset_button_x, reset_button_y, button_width, button_height), 'Reset', 'Reset')
         
         # Position the mute button at the top left
-        mute_button_x = context.WIDTH - button_width - margin
-        mute_button_y = context.HEIGHT - button_height - margin
-        mute_button = Button((mute_button_x, mute_button_y, button_width, button_height), 'Reset', 'Reset')
+        mute_button_text = "Mute" 
+        if context.mute_sound: mute_button_text =  "Unmute"
+        mute_button_x = margin
+        mute_button_y = margin
+        mute_button = Button((mute_button_x, mute_button_y, button_width, button_height), mute_button_text, mute_button_text)
         
         # Draw the buttons
         back_button.draw()
         save_and_exit_button.draw()
         reset_button.draw()
+        mute_button.draw()
         
-        return [back_button, save_and_exit_button, reset_button]
+        return [back_button, save_and_exit_button, reset_button, mute_button]
 
        
     #This method draws the scores on the screen
