@@ -11,7 +11,7 @@
 #Added sounds to tile combine
 #Added methods to display popups for certain game events
 #2/22/2024
-#Added logic to save and load game state
+#Added logic to save and load game state automatically when the game is left by any means, allowing quick resume of the game
 
 #2/21/2024
 #Added logic to color tiles based on their value
@@ -280,15 +280,14 @@ class GameBoard:
             return 'game_over'
         return 'continue'
 
- 
+    #This method checks if the player has reached the 2048 tile
     def check_win(self):
-        #Check if the player has reached the 2048 tile.
         if context.first_time:
             return np.any(self.board == 2048)
         else: return False
  
+    #This method checks if the game is over
     def check_game_over(self):
-        # Check if there are no valid moves left.
         if any(0 in row for row in self.board):
             return False  # If there are empty cells, game is not over yet.
 

@@ -17,7 +17,7 @@ from context import settings_manager        #Allows access to global settings th
 import pygame
 from _2048.game_board import GameBoard
 
-
+# Reset the context to the main menu
 def reset_context():
     context.main_menu = False
     context.options_menu = False
@@ -32,6 +32,7 @@ def reset_context():
     context._7x7 = False
     context._8x8 = False
 
+# Map button actions to their handlers in order to display menus and start puzzles
 def handle_back():
     if not context.main_menu:
         GameBoard.save_game(context.game_board)
@@ -87,14 +88,20 @@ def handle_volume():
     reset_context()
     context.volume_menu = True
     
+    # Stop music playback
 def handle_stop():
     pygame.mixer.music.fadeout(2)
     settings_manager.set_setting('playMusic', False)
     
+    # Start music playback, if it was muted, set the volume to the previous volume
 def handle_play():
     pygame.mixer.music.play(-1)
+    if pygame.mixer.music.get_volume() == 0:
+        pygame.mixer.music.set_volume(settings_manager.get_setting('previousVolume'))
+        context.combine_sound.set_volume(settings_manager.get_setting('previousVolume'))
     settings_manager.set_setting('playMusic', True)
     
+    # Adjust the volume of the music and the combine sound
 def handle_quieter():
     if pygame.mixer.music.get_busy():  # Returns True if music is playing
         current_volume = pygame.mixer.music.get_volume()
@@ -102,12 +109,13 @@ def handle_quieter():
         new_volume = max(0.0, min(1.0, current_volume - context.adjustment))
         pygame.mixer.music.set_volume(new_volume)
         context.combine_sound.set_volume(new_volume)
-        settings_manager.set_setting('volume', new_volume)
+        settings_manager.set_setting('musicVolume', new_volume)
+        settings_manager.set_setting('combineVolume', new_volume)
         settings_manager.set_setting('previousVolume', new_volume)
     else:
         print("Music is not playing.")
 
-    
+    # Adjust the volume of the music and the combine sound
 def handle_louder():
     if pygame.mixer.music.get_busy():  # Returns True if music is playing
         current_volume = pygame.mixer.music.get_volume()
@@ -115,12 +123,13 @@ def handle_louder():
         new_volume = max(0.0, min(1.0, current_volume + context.adjustment))
         pygame.mixer.music.set_volume(new_volume)
         context.combine_sound.set_volume(new_volume)
-        settings_manager.set_setting('volume', new_volume)
+        settings_manager.set_setting('musicVolume', new_volume)
+        settings_manager.set_setting('combineVolume', new_volume)
         settings_manager.set_setting('previousVolume', new_volume)
     else:
         print("Music is not playing.")
         
-
+# Change the music to the next song in the list
 def handle_next():
     current_song = settings_manager.get_setting('currentSong')
     if current_song == 'Mind-Bender.mp3':
@@ -148,14 +157,16 @@ def handle_next():
         pygame.mixer.music.load('.venv/assets/music/Mind-Bender.mp3')
         pygame.mixer.music.play(-1)
         
+# Mute the music and the combine sound
 def handle_mute():
     pygame.mixer.music.set_volume(0)
     context.combine_sound.set_volume(0)
     settings_manager.set_setting('volume', 0)
     context.mute_sound = True
 
+# Unmute the combine sound, and if the music was playing prior to mute then set the volume to the previous volume
 def handle_unmute():
-    pygame.mixer.music.set_volume(settings_manager.get_setting('previousVolume'))
+    if settings_manager.get_setting('playMusic'): pygame.mixer.music.set_volume(settings_manager.get_setting('previousVolume'))
     context.combine_sound.set_volume(settings_manager.get_setting('previousVolume'))
     context.mute_sound = False
     

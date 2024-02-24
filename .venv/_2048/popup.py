@@ -7,6 +7,7 @@ import context
 from models.button import Button  # Assuming Button class is defined properly
 
 class Popup:
+    # Initialize the popup with the screen, prompts, and button text
     def __init__(self, screen, prompt1, prompt2, button1_text, button2_text):
         self.screen = screen
         self.prompt1 = prompt1
@@ -15,6 +16,7 @@ class Popup:
         self.button2_text = button2_text
         self.font = context.fontMain
 
+    # Draw the popup box and buttons
     def draw(self):
         # Draw the semi-transparent rectangle
         overlay = pygame.Surface((self.screen.get_width(), self.screen.get_height()), pygame.SRCALPHA)

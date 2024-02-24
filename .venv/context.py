@@ -73,8 +73,8 @@ combine_sound = pygame.mixer.Sound('.venv/assets/sounds/chime.mp3')             
 if (settings_manager.get_setting('playMusic')):                                     #If the user has music set to on
     pygame.mixer.music.play(-1)                                                     #Play the music on loop
 
-pygame.mixer.music.set_volume(settings_manager.get_setting('volume'))               #Set volume to last saved volume
-combine_sound.set_volume(settings_manager.get_setting('volume'))               #Set volume to last saved volume
+pygame.mixer.music.set_volume(settings_manager.get_setting('musicVolume'))          #Set volume to last saved volume
+combine_sound.set_volume(settings_manager.get_setting('combineVolume'))               #Set volume to last saved volume
 adjustment = .1                                                                     #Volume change increment
 
 #Game state - set to false to close the application

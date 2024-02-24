@@ -1,6 +1,6 @@
 #Quinton Nelson
 #2/4/2024
-#This class used to draw different sections of the menu
+#This class used to draw different menus throughout the game
 
 #Jason Nelson
 #02/12/2024
