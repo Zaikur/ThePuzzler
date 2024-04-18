@@ -30,8 +30,5 @@ Contributions to ThePuzzler are welcome! Please follow these steps to contribute
 4. Push to the branch (`git push origin feature/amazing-feature`).
 5. Open a new Pull Request.
 
-## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
 ## Acknowledgements
 - Quinton Nelson, AFHofts, and JasonNelson93 for initial development and ongoing maintenance.
